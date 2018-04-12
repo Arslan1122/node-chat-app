@@ -17,13 +17,22 @@ io.on('connection',function(socket){
     console.log('New User connected');
 
     socket.on('createMessage',function(message){
-        console.log('Message Created',message);
+        // console.log('Message Created',message);
+
+        // io.emit will show the message to all the users that connected to that link
+        io.emit('newMessage',{
+            from:message.from,
+            text:message.text,
+            createdAt:new Date().getTime()
+        });
     });
 
-    socket.emit('newMessage',{
-        from:'jhon',
-        message:'Message from server'
-    });
+    // socket.emit('newMessage',{
+    //     from:'jhon',
+    //     message:'Message from server'
+    // });
+
+
 
     socket.on('disconnect',function(){
         console.log('User was disconnected');
