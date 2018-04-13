@@ -10,6 +10,7 @@ var server = http.createServer(app);
 var io = socketIO(server);
 var generate_msg = require('./utils/message');
 var generate_location = require('./utils/message');
+const isString = require('./utils/validation');
 
 app.use(express.static(publicPath));
 
@@ -20,6 +21,12 @@ io.on('connection', function (socket) {
 
     socket.broadcast.emit('newMessage', generate_msg.generateMessage('Admin', 'New User Joined'));
 
+    socket.on('join', function (params, callback) {
+        if (!isString.isRealString(params.name) || !isString.isRealString(params.room-name)) {
+            callback('Name and room name are required.');
+        }
+        callback();
+    });
     socket.on('createMessage', function (message, callback) {
         console.log('Message Created', message);
 
@@ -44,6 +51,9 @@ io.on('connection', function (socket) {
     socket.on('createLocationMessage', function (coords) {
         io.emit('newLocation', generate_location.generateLocation('Admin', coords.latitude, coords.longitude));
     });
+
+
+
 
     socket.on('disconnect', function () {
         console.log('User was disconnected');
