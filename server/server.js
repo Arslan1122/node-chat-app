@@ -25,7 +25,7 @@ io.on('connection', function (socket) {
 
         // io.emit will show the message to all the users that connected to that link
         io.emit('newMessage', generate_msg.generateMessage(message.from, message.text));
-        callback('This is From server');
+        callback();
         //If we want to show message only to others and not to show himself then we use broadcast
 
         // socket.broadcast.emit('newMessage',{
