@@ -6,6 +6,14 @@ return{
     };
 };
 
+var generateLocation = function (from,lat,lan) {
+  return{
+      from:from,
+      url:'https://www.google.com/maps?q='+lat+','+lan,
+      createdAt:new Date().getTime()
+  }
+};
 module.exports={
-    generateMessage : generateMessage
+    generateMessage : generateMessage,
+    generateLocation : generateLocation
 };
